@@ -1,8 +1,8 @@
-import Link from 'next/link';
+import Login from '../components/Login'
 
 const Home = props => (
   <div>
-    <p>Hey!</p>
+    <Login />
   </div>
 );
 
