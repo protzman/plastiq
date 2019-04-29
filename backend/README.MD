@@ -2,9 +2,9 @@
 1. `npm i -g prisma`
 2. `prisma login`
 3. `prisma init` - (select the following choices from the prompt)
-   - demo server (choose one with lower latency)
-   - dev
-   - don't genereate (prisma client)
+   - `> demo server` (choose one with lower latency)
+   - `> dev`
+   - `> don't genereate` (prisma client)
 4. copy the generated prisma endpoint from the prisma.yml file to the env file and replace in the prisma.yml file with `${env:PRISMA_ENDPOINT}`
 5. add secret field to pisma.yml 'secret: ${env:PRISMA_SECRET}
 6. add the following to prisma.yml
