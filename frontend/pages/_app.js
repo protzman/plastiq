@@ -3,7 +3,7 @@ import { ApolloProvider } from 'react-apollo'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import JssProvider from 'react-jss/lib/JssProvider'
-import getPageContext from '../static/getPageContext'
+import getPageContext from '../src/getPageContext'
 import withData from '../lib/withData'
 
 class MyApp extends App {
@@ -25,6 +25,22 @@ class MyApp extends App {
 
     return (
       <Container>
+        <style global>
+          {`
+            @font-face {
+              font-family: 'Raleway', sans-serif !important;
+              font-style: normal;
+            }
+            *, *:before, *:after {
+              box-sizing: inherit;
+            }
+            body {
+              padding: 0;
+              margin: 0;
+              font-family: 'Raleway', sans-serif !important;
+            }
+        `}
+        </style>
         <ApolloProvider client={apollo}>
           <JssProvider
             registry={this.pageContext.sheetsRegistry}

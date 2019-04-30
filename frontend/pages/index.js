@@ -11,20 +11,6 @@ const styles = theme => ({
   },
 })
 
-injectGlobal`
-  @font-face {
-    font-family: 'Raleway', sans-serif !important;
-    font-style: normal;
-  }
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-  body {
-    padding: 0;
-    margin: 0;
-    font-family: 'Raleway', sans-serif !important;
-  }
-`
 class Index extends Component {
   render() {
     const { classes } = this.props
