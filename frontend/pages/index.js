@@ -7,7 +7,6 @@ import Meta from '../components/Meta'
 
 const styles = theme => ({
   root: {
-    margin: '2em'
   },
 })
 

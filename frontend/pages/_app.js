@@ -1,3 +1,4 @@
+import React from 'react'
 import App, { Container } from 'next/app'
 import { ApolloProvider } from 'react-apollo'
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -22,10 +23,9 @@ class MyApp extends App {
 
   render() {
     const { Component, apollo, pageProps } = this.props
-
     return (
       <Container>
-        <style global>
+        <style jsx global>
           {`
             @font-face {
               font-family: 'Raleway', sans-serif !important;
@@ -41,18 +41,20 @@ class MyApp extends App {
             }
         `}
         </style>
+        {/* Wrap every page in Jss and Theme providers */}
         <ApolloProvider client={apollo}>
           <JssProvider
             registry={this.pageContext.sheetsRegistry}
             generateClassName={this.pageContext.generateClassName}
           >
-            {/* MuiThemeProvider makes the theme available down the React
-        tree thanks to React context. */}
             <MuiThemeProvider
               theme={this.pageContext.theme}
               sheetsManager={this.pageContext.sheetsManager}
             >
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
               <CssBaseline />
+              {/* Pass pageContext to the _document though the renderPage enhancer
+                to render collected styles on server-side. */}
               <Component pageContext={this.pageContext} {...pageProps} />
             </MuiThemeProvider>
           </JssProvider>
