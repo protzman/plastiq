@@ -2,7 +2,7 @@ import Typography from '@material-ui/core/Typography'
 
 const Overview = props => (
   <div>
-    <Typography variant="headline">login page</Typography>
+    <Typography variant="headline">overview page</Typography>
   </div>
 )
 

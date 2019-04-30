@@ -32,7 +32,8 @@ export const theme = createMuiTheme({
       main: colors.nord03
     },
     background: {
-      paper: colors.nord00
+      paper: colors.nord00,
+      default: colors.nord02
     },
     text: {
       primary: colors.nord04

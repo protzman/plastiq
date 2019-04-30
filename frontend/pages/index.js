@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import { injectGlobal } from 'styled-components'
 import { withStyles } from '@material-ui/core/styles'
 import Login from '../components/Login'
-import Header from '../components/Header'
-import Meta from '../components/Meta'
 
 const styles = theme => ({
   root: {
@@ -15,8 +12,6 @@ class Index extends Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <Meta />
-        <Header />
         <Login />
       </div>
     )
