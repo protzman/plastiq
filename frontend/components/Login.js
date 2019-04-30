@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import Link from 'next/link'
+import Typography from '@material-ui/core/Typography'
 
 
 const styles = theme => ({
@@ -13,7 +14,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        login page
+        <Typography variant="headline">login page</Typography>
         <Link href="/overview">
           <a>login</a>
         </Link>
