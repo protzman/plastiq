@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import Login from '../components/Login'
+import SignIn from '../components/SignIn'
 
 const styles = theme => ({
   root: {
@@ -12,7 +12,7 @@ class Index extends Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <Login />
+        <SignIn />
       </div>
     )
   }
