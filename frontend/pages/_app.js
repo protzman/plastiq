@@ -8,6 +8,16 @@ import Page from '../components/Page'
 import { theme } from '../src/theme'
 
 class MyApp extends App {
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {}
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx)
+    }
+    // this exposes the query to the user
+    pageProps.query = ctx.query
+    return { pageProps }
+  }
+
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')

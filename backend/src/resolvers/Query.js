@@ -1,3 +1,8 @@
-const Query = {};
+const { forwardTo } = require('prisma-binding')
 
-module.exports = Query;
+const Query = {
+  topics: forwardTo('db'),
+  topic: forwardTo('db'),
+}
+
+module.exports = Query

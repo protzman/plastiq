@@ -1,7 +1,7 @@
 # source: https://eu1.prisma.sh/stephen-protzman-7569dd/observer/dev
-# timestamp: Thu Apr 25 2019 18:16:36 GMT-0400 (EDT)
+# timestamp: Fri May 03 2019 13:30:45 GMT-0400 (Eastern Daylight Time)
 
-type AggregateItem {
+type AggregateTopic {
   count: Int!
 }
 
@@ -16,76 +16,144 @@ type BatchPayload {
 
 scalar DateTime
 
-type Item implements Node {
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+  createTopic(data: TopicCreateInput!): Topic!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateTopic(data: TopicUpdateInput!, where: TopicWhereUniqueInput!): Topic
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteTopic(where: TopicWhereUniqueInput!): Topic
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertTopic(where: TopicWhereUniqueInput!, create: TopicCreateInput!, update: TopicUpdateInput!): Topic!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyTopics(data: TopicUpdateManyMutationInput!, where: TopicWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyTopics(where: TopicWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
   id: ID!
-  title: String!
-  content: String!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  topics(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Topic]!
+  user(where: UserWhereUniqueInput!): User
+  topic(where: TopicWhereUniqueInput!): Topic
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  topicsConnection(where: TopicWhereInput, orderBy: TopicOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TopicConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Subscription {
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  topic(where: TopicSubscriptionWhereInput): TopicSubscriptionPayload
+}
+
+type Topic implements Node {
+  id: ID!
+  name: String!
+  description: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
-type ItemConnection {
+type TopicConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [ItemEdge]!
-  aggregate: AggregateItem!
+  edges: [TopicEdge]!
+  aggregate: AggregateTopic!
 }
 
-input ItemCreateInput {
+input TopicCreateInput {
   id: ID
-  title: String!
-  content: String!
+  name: String!
+  description: String!
 }
 
 """An edge in a connection."""
-type ItemEdge {
+type TopicEdge {
   """The item at the end of the edge."""
-  node: Item!
+  node: Topic!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum ItemOrderByInput {
+enum TopicOrderByInput {
   id_ASC
   id_DESC
-  title_ASC
-  title_DESC
-  content_ASC
-  content_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
 
-type ItemPreviousValues {
+type TopicPreviousValues {
   id: ID!
-  title: String!
-  content: String!
+  name: String!
+  description: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-type ItemSubscriptionPayload {
+type TopicSubscriptionPayload {
   mutation: MutationType!
-  node: Item
+  node: Topic
   updatedFields: [String!]
-  previousValues: ItemPreviousValues
+  previousValues: TopicPreviousValues
 }
 
-input ItemSubscriptionWhereInput {
+input TopicSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [ItemSubscriptionWhereInput!]
+  AND: [TopicSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [ItemSubscriptionWhereInput!]
+  OR: [TopicSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [ItemSubscriptionWhereInput!]
+  NOT: [TopicSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -106,28 +174,28 @@ input ItemSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: ItemWhereInput
+  node: TopicWhereInput
 }
 
-input ItemUpdateInput {
-  title: String
-  content: String
+input TopicUpdateInput {
+  name: String
+  description: String
 }
 
-input ItemUpdateManyMutationInput {
-  title: String
-  content: String
+input TopicUpdateManyMutationInput {
+  name: String
+  description: String
 }
 
-input ItemWhereInput {
+input TopicWhereInput {
   """Logical AND on all given filters."""
-  AND: [ItemWhereInput!]
+  AND: [TopicWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [ItemWhereInput!]
+  OR: [TopicWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [ItemWhereInput!]
+  NOT: [TopicWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -168,86 +236,86 @@ input ItemWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  title: String
+  name: String
 
   """All values that are not equal to given value."""
-  title_not: String
+  name_not: String
 
   """All values that are contained in given list."""
-  title_in: [String!]
+  name_in: [String!]
 
   """All values that are not contained in given list."""
-  title_not_in: [String!]
+  name_not_in: [String!]
 
   """All values less than the given value."""
-  title_lt: String
+  name_lt: String
 
   """All values less than or equal the given value."""
-  title_lte: String
+  name_lte: String
 
   """All values greater than the given value."""
-  title_gt: String
+  name_gt: String
 
   """All values greater than or equal the given value."""
-  title_gte: String
+  name_gte: String
 
   """All values containing the given string."""
-  title_contains: String
+  name_contains: String
 
   """All values not containing the given string."""
-  title_not_contains: String
+  name_not_contains: String
 
   """All values starting with the given string."""
-  title_starts_with: String
+  name_starts_with: String
 
   """All values not starting with the given string."""
-  title_not_starts_with: String
+  name_not_starts_with: String
 
   """All values ending with the given string."""
-  title_ends_with: String
+  name_ends_with: String
 
   """All values not ending with the given string."""
-  title_not_ends_with: String
-  content: String
+  name_not_ends_with: String
+  description: String
 
   """All values that are not equal to given value."""
-  content_not: String
+  description_not: String
 
   """All values that are contained in given list."""
-  content_in: [String!]
+  description_in: [String!]
 
   """All values that are not contained in given list."""
-  content_not_in: [String!]
+  description_not_in: [String!]
 
   """All values less than the given value."""
-  content_lt: String
+  description_lt: String
 
   """All values less than or equal the given value."""
-  content_lte: String
+  description_lte: String
 
   """All values greater than the given value."""
-  content_gt: String
+  description_gt: String
 
   """All values greater than or equal the given value."""
-  content_gte: String
+  description_gte: String
 
   """All values containing the given string."""
-  content_contains: String
+  description_contains: String
 
   """All values not containing the given string."""
-  content_not_contains: String
+  description_not_contains: String
 
   """All values starting with the given string."""
-  content_starts_with: String
+  description_starts_with: String
 
   """All values not starting with the given string."""
-  content_not_starts_with: String
+  description_not_starts_with: String
 
   """All values ending with the given string."""
-  content_ends_with: String
+  description_ends_with: String
 
   """All values not ending with the given string."""
-  content_not_ends_with: String
+  description_not_ends_with: String
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -294,76 +362,8 @@ input ItemWhereInput {
   updatedAt_gte: DateTime
 }
 
-input ItemWhereUniqueInput {
+input TopicWhereUniqueInput {
   id: ID
-}
-
-"""
-The `Long` scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
-"""
-scalar Long
-
-type Mutation {
-  createUser(data: UserCreateInput!): User!
-  createItem(data: ItemCreateInput!): Item!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteItem(where: ItemWhereUniqueInput!): Item
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyItems(where: ItemWhereInput): BatchPayload!
-}
-
-enum MutationType {
-  CREATED
-  UPDATED
-  DELETED
-}
-
-"""An object with an ID"""
-interface Node {
-  """The id of the object."""
-  id: ID!
-}
-
-"""Information about pagination in a connection."""
-type PageInfo {
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-}
-
-type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
-  user(where: UserWhereUniqueInput!): User
-  item(where: ItemWhereUniqueInput!): Item
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
-
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-}
-
-type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
 }
 
 type User implements Node {

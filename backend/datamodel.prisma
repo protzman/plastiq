@@ -4,10 +4,10 @@ type User {
   email: String!
 }
 
-type Item {
+type Topic {
   id: ID! @id
-  title: String!
-  content: String!
+  name: String!
+  description: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

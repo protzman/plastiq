@@ -1,8 +1,9 @@
 # import * from './generated/prisma.graphql'
 type Mutation {
-  hi: String
+    createTopic(name: String, description: String): Topic!
 }
 
 type Query {
-  hi: String
+    topics(where: TopicWhereInput, orderBy: TopicOrderByInput, first: Int): [Topic]!
+    topic(where: TopicWhereUniqueInput!): Topic
 }

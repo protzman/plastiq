@@ -23,22 +23,24 @@ const colors = {
 
 
 export const theme = createMuiTheme({
+  shadows: ['none'],
   palette: {
     action: {
-      active: colors.nord04
+      active: colors.nord03
     },
     primary: {
-      main: colors.nord04
+      main: colors.nord03
     },
     secondary: {
       main: colors.nord03
     },
     background: {
-      paper: colors.nord00,
-      default: colors.nord02
+      paper: colors.nord05,
+      default: colors.nord04,
+      search: colors.nord03
     },
     text: {
-      primary: colors.nord04
+      primary: colors.nord03
     }
 
   },

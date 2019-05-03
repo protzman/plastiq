@@ -1,9 +1,22 @@
-import Typography from '@material-ui/core/Typography'
+import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
 
-const Overview = props => (
-  <div>
-    <Typography variant="headline">overview page</Typography>
-  </div>
-)
+const styles = {
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+}
 
-export default Overview
+function Overview(props) {
+  const { classes } = props
+  return (
+    <div>
+      overview page
+    </div>
+  )
+}
+
+export default withStyles(styles)(Overview)
