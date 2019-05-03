@@ -1,5 +1,9 @@
-# Cryptocurrency Exploration & Interrogation
-A Cryptocurrency application to explore the blockchain and run different analysis on wallets and addresses.
+# Sequense (working name)
+A helpful tool for creating and maintaining a knowledge base for any topic you wish. Each post you create can be tied to a topic, and then further subdivded by adding tags to it. Find past knowledge you've input by looking through your topics, or filter by tags within a topic to narrow your results.
+
+### Preface
+I am creating this mostly as a means to explore new technology to me, as well as a tool, so it may not be 100% professional. I often times go back looking through old code looking for an example of how I did something in another project. This solves that acting as a personal StackOverflow / Medium of sorts. Store code samples with explanations, tutorials or how twos from other parts of your life, potentially even something like recipes. I guess another way to think of this is like a better Google Keep (but not mobile - for now).
+
 
 ## Setting up local Visual Studio Code environment
 In order to have a close development experience between developers, below is an overview of an _ideal_ VS Code setup. In the User Settings found at `Code > Preferences > Settings` ensure the following rules exist
@@ -22,7 +26,6 @@ After the above lines are added to the `User Settings` json file and you have ei
     "dependencies": {
       "babel-eslint": "^10.0.1",
       "eslint": "^5.16.0",
-      ...
     }
     ```
 3. These development dependencies exist in the `package.json`
@@ -32,7 +35,6 @@ After the above lines are added to the `User Settings` json file and you have ei
       "eslint-plugin-import": "^2.17.2",
       "eslint-plugin-jsx-a11y": "^6.2.1",
       "eslint-plugin-react": "^7.12.4",
-      ...
     }
     ```
 
