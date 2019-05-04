@@ -12,8 +12,8 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-
-import { ALL_TOPICS_QUERY } from '../Sidebar'
+import faker from 'faker'
+import { ALL_TOPICS_QUERY } from '../queries/topicQueries'
 
 const CREATE_TOPIC_MUTATION = gql`
   mutation CREATE_TOPIC_MUTATION(
@@ -25,6 +25,7 @@ const CREATE_TOPIC_MUTATION = gql`
       description: $description
     ) {
     id
+    name
   }
 }
 `
@@ -46,7 +47,7 @@ const styles = theme => ({
 class NewTopicDialog extends Component {
   state = {
     name: '',
-    description: '',
+    description: `${faker.lorem.paragraphs()}`,
   }
 
   handleChange = (e) => {
@@ -57,13 +58,13 @@ class NewTopicDialog extends Component {
   update = (cache, payload) => {
     // manually update the cache on the client, so it matches the server
     // 1. Read the cache for the items we want
-    const data = cache.readQuery({ query: ALL_TOPICS_QUERY })
-    console.log(data, payload)
+    let data = cache.readQuery({ query: ALL_TOPICS_QUERY })
+    console.log(data, payload.data.createTopic)
     // 2. Filter the deleted item out of the page
-    // data.topics = data.items.filter(item => item.id !== payload.data.deleteItem.id)
+    const newData = [...data.topics, payload.data.createTopic]
+    console.log(newData)
     // 3. Put the items back!
-    // cache.writeQuery({ query: ALL_TOPICS_QUERY, data })
-    // TODO sort out adding the new one to the list
+    cache.writeQuery({ query: ALL_TOPICS_QUERY, newData })
   };
 
   render() {
@@ -72,6 +73,7 @@ class NewTopicDialog extends Component {
       <Mutation
         mutation={CREATE_TOPIC_MUTATION}
         variables={this.state}
+        refetchQueries={["ALL_TOPICS_QUERY"]}
         update={this.update}
       >
         {(createTopic, { loading, error }) => (

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { Query } from 'react-apollo'
+import Router from 'next/router'
+import NProgress from 'nprogress'
 
 import Drawer from '@material-ui/core/Drawer'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -10,34 +12,20 @@ import Toolbar from '@material-ui/core/Toolbar'
 import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
 import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import InputBase from '@material-ui/core/InputBase'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
 import IconButton from '@material-ui/core/IconButton'
-import MailIcon from '@material-ui/icons/Mail'
 import PlusIcon from '@material-ui/icons/Add'
 import SearchIcon from '@material-ui/icons/Search'
 import Link from 'next/link'
-import gql from 'graphql-tag'
-
 import Dialog from '@material-ui/core/Dialog'
 
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import NewTopicDialog from './dialogs/NewTopicDialog'
+import { ALL_TOPICS_QUERY } from './queries/topicQueries'
 
-import { perPage } from '../config'
 
 const drawerWidth = '15%'
-
-const ALL_TOPICS_QUERY = gql`
-query ALL_TOPICS_QUERY($first: Int = 25) {
-    topics(first: $first, orderBy: name_DESC) {
-      id
-      name
-    }
-  }
-`
 
 const styles = theme => ({
   root: {
@@ -108,6 +96,18 @@ const styles = theme => ({
   },
 })
 
+Router.onRouteChangeStart = () => {
+  NProgress.start()
+}
+
+Router.onRouteChangeComplete = () => {
+  NProgress.done()
+}
+
+Router.onRouteChangeError = () => {
+
+}
+
 class Sidebar extends Component {
   constructor(props) {
     super(props)
@@ -166,7 +166,6 @@ class Sidebar extends Component {
           </div>
           <Query
             query={ALL_TOPICS_QUERY}
-
           >
             {({ data, error, loading }) => {
               if (loading) return <p>Loading...</p>
@@ -182,9 +181,15 @@ class Sidebar extends Component {
               return (
                 <List>
                   {data.topics.map(topic => (
-                    <ListItem button key={topic.id}>
-                      <ListItemText primary={topic.name} />
-                    </ListItem>
+                    <Link href={{
+                      pathname: '/topic',
+                      query: { id: topic.id }
+                    }}
+                    >
+                      <ListItem button key={topic.id}>
+                        <ListItemText primary={topic.name} />
+                      </ListItem>
+                    </Link>
                   ))}
                 </List>
               )
@@ -210,5 +215,4 @@ Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export { ALL_TOPICS_QUERY }
 export default withStyles(styles)(Sidebar)
