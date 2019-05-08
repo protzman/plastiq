@@ -6,8 +6,28 @@ type User {
 
 type Topic {
   id: ID! @id
-  name: String!
+  title: String! @unique
   description: String!
+  tags: [Tag!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Tag {
+  id: ID! @id
+  title: String!
+  description: String
+  posts: [Post!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Post {
+  id: ID! @id
+  title: String!
+  content: String!
+  tags: [Tag!]!
+  topic: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

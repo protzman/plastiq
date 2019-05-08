@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import Router, { withRouter } from 'next/router'
 import { withStyles } from '@material-ui/core/styles'
-import { Query } from 'react-apollo'
-import Router from 'next/router'
+import { Query, compose } from 'react-apollo'
 import NProgress from 'nprogress'
+
 
 import Drawer from '@material-ui/core/Drawer'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -11,15 +12,14 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import InputBase from '@material-ui/core/InputBase'
 import IconButton from '@material-ui/core/IconButton'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 import PlusIcon from '@material-ui/icons/Add'
 import SearchIcon from '@material-ui/icons/Search'
 import Link from 'next/link'
 import Dialog from '@material-ui/core/Dialog'
-
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import NewTopicDialog from './dialogs/NewTopicDialog'
 import { ALL_TOPICS_QUERY } from './queries/topicQueries'
@@ -125,7 +125,7 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, router } = this.props
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -186,8 +186,12 @@ class Sidebar extends Component {
                       query: { id: topic.id }
                     }}
                     >
-                      <ListItem button key={topic.id}>
-                        <ListItemText primary={topic.name} />
+                      <ListItem
+                        button
+                        key={topic.id}
+                        selected={router.query.id === topic.id}
+                      >
+                        <ListItemText primary={topic.title} />
                       </ListItem>
                     </Link>
                   ))}
@@ -215,4 +219,9 @@ Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(Sidebar)
+const enhancedSidebar = compose(
+  withStyles(styles),
+  withRouter
+)(Sidebar)
+
+export default enhancedSidebar

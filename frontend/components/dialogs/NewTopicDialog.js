@@ -17,15 +17,15 @@ import { ALL_TOPICS_QUERY } from '../queries/topicQueries'
 
 const CREATE_TOPIC_MUTATION = gql`
   mutation CREATE_TOPIC_MUTATION(
-    $name: String!
+    $title: String!
     $description: String!
   ){
     createTopic(
-      name: $name
+      title: $title
       description: $description
     ) {
     id
-    name
+    title
   }
 }
 `
@@ -46,7 +46,7 @@ const styles = theme => ({
 
 class NewTopicDialog extends Component {
   state = {
-    name: '',
+    title: '',
     description: `${faker.lorem.paragraphs()}`,
   }
 
@@ -56,14 +56,8 @@ class NewTopicDialog extends Component {
   }
 
   update = (cache, payload) => {
-    // manually update the cache on the client, so it matches the server
-    // 1. Read the cache for the items we want
     let data = cache.readQuery({ query: ALL_TOPICS_QUERY })
-    console.log(data, payload.data.createTopic)
-    // 2. Filter the deleted item out of the page
     const newData = [...data.topics, payload.data.createTopic]
-    console.log(newData)
-    // 3. Put the items back!
     cache.writeQuery({ query: ALL_TOPICS_QUERY, newData })
   };
 
@@ -96,16 +90,16 @@ class NewTopicDialog extends Component {
             <DialogTitle id="form-dialog-title">Create a new topic</DialogTitle>
             <DialogContent>
               <DialogContentText classes={{ root: classes.root }}>
-                Topics are used to group tags together for related entries. Tags won't be shared accross topics, but you can use a tag with the same name on multiple topics.
+                Topics are used to group tags together for related entries. Tags won't be shared accross topics, but you can use a tag with the same title on multiple topics.
               </DialogContentText>
               <FormControl fullWidth disabled={loading} error={error} className={classes.item}>
                 <Input
                   autoFocus
-                  id="topic-name"
-                  name="name"
-                  value={this.state.name}
+                  id="topic-title"
+                  name="title"
+                  value={this.state.title}
                   onChange={this.handleChange}
-                  placeholder="topic name"
+                  placeholder="topic title"
                   type="text"
                   classes={{ root: classes.root }}
                   fullWidth
