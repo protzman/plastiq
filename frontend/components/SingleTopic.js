@@ -6,6 +6,7 @@ import Divider from '@material-ui/core/Divider'
 import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles'
 import NoteAddIcon from '@material-ui/icons/NoteAdd'
+import Link from 'next/link'
 import Error from './ErrorMessage'
 
 const SINGLE_TOPIC_QUERY = gql`
@@ -67,12 +68,18 @@ class SingleTopic extends Component {
                 <p>{topic.description}</p>
               </div>
               <Divider />
-              <Fab color="primary" aria-label="Add" className={classes.fab}>
-                <NoteAddIcon />
-              </Fab>
+              <Link href={{
+                pathname: '/post',
+              }}
+              >
+                <Fab color="primary" aria-label="Add" className={classes.fab}>
+                  <NoteAddIcon />
+                </Fab>
+              </Link>
             </div>
           )
-        }}
+        }
+        }
       </Query>
     )
   }
