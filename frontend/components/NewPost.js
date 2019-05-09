@@ -1,19 +1,12 @@
-import Link from 'next/link'
-import styled from 'styled-components'
-import Router from 'next/router'
-import NProgress from 'nprogress'
-import AppBar from '@material-ui/core/AppBar'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import Avatar from '@material-ui/core/Avatar'
-import InputBase from '@material-ui/core/InputBase'
 import { fade } from '@material-ui/core/styles/colorManipulator'
-import { withStyles } from '@material-ui/core/styles'
-import SearchIcon from '@material-ui/icons/Search'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import Input from '@material-ui/core/Input'
+import Button from '@material-ui/core/Button'
+import LivePreview from './LivePreview'
+import PostInput from './PostInput'
 
 const styles = makeStyles(theme => ({
   root: {
@@ -83,15 +76,60 @@ const styles = makeStyles(theme => ({
   },
   toolbar: {
     minHeight: '72px'
+  },
+  item: {
+    marginBottom: theme.spacing(4)
+  },
+  container: {
+    flexGrow: '1',
+    display: 'flex',
+    minHeight: '0',
+  },
+  column: {
+    flexGrow: '1',
+    overflowY: 'scroll',
+    minHeight: '100%',
+  },
+  input: {
+    paddingLeft: '14px'
   }
 }))
 
 export default function NewPost() {
+  const [content, setContent] = useState()
+  const [title, setTitle] = useState()
+  const [tags, setTags] = useState()
   const classes = styles()
   return (
-    <div className={classes.root}>
-      new post here
-    </div>
-
+    <Grid container spacing={2}>
+      <Grid item xs={6}>
+        <div className={classes.item}>
+          <Typography variant="h5">Title</Typography>
+        </div>
+        <div className={classes.item}>
+          <Input fullWidth placeholder="title" className={classes.input} onChange={e => setTitle(e.target.value)} />
+        </div>
+        <div className={classes.item}>
+          <Typography variant="h5">Body</Typography>
+        </div>
+        <div className={classes.item}>
+          <PostInput value={content} setContent={setContent} />
+        </div>
+        <div className={classes.item}>
+          <Typography variant="h5">Tags</Typography>
+        </div>
+        <div className={classes.item}>
+          <Input fullWidth placeholder="tags" className={classes.input} />
+        </div>
+        <div className={classes.item}>
+          <Button variant="outlined" type="submit">Submit Post</Button>
+        </div>
+      </Grid>
+      <Grid item xs={6}>
+        <div className={classes.item}>
+          <LivePreview content={content} title={title} tags={tags} />
+        </div>
+      </Grid>
+    </Grid>
   )
 }

@@ -10,6 +10,7 @@ const styles = makeStyles(theme => ({
     marginLeft: '15%',
     marginTop: '64px',
     padding: '16px',
+    maxWidth: '85%',
     background: theme.palette.background.default
   }
 }))
