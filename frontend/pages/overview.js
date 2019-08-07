@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import Map from '../components/Map'
 
 const styles = {
   card: {
@@ -14,7 +15,7 @@ function Overview(props) {
   const { classes } = props
   return (
     <div>
-      overview page
+      <Map />
     </div>
   )
 }

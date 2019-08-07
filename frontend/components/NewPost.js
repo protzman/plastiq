@@ -5,8 +5,11 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Input from '@material-ui/core/Input'
 import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
 import LivePreview from './LivePreview'
 import PostInput from './PostInput'
+import TagInput from './TagInput'
+import NewTagDialog from './dialogs/NewTagDialog'
 
 const styles = makeStyles(theme => ({
   root: {
@@ -99,15 +102,16 @@ export default function NewPost() {
   const [content, setContent] = useState()
   const [title, setTitle] = useState()
   const [tags, setTags] = useState()
+
   const classes = styles()
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={6}>
+    <Grid container spacing={2} justify="center">
+      <Grid item xs={8}>
         <div className={classes.item}>
           <Typography variant="h5">Title</Typography>
         </div>
         <div className={classes.item}>
-          <Input fullWidth placeholder="title" className={classes.input} onChange={e => setTitle(e.target.value)} />
+          <Input fullWidth className={classes.input} onChange={e => setTitle(e.target.value)} />
         </div>
         <div className={classes.item}>
           <Typography variant="h5">Body</Typography>
@@ -119,15 +123,10 @@ export default function NewPost() {
           <Typography variant="h5">Tags</Typography>
         </div>
         <div className={classes.item}>
-          <Input fullWidth placeholder="tags" className={classes.input} />
+          <TagInput value={tags} setTags={setTags} />
         </div>
         <div className={classes.item}>
           <Button variant="outlined" type="submit">Submit Post</Button>
-        </div>
-      </Grid>
-      <Grid item xs={6}>
-        <div className={classes.item}>
-          <LivePreview content={content} title={title} tags={tags} />
         </div>
       </Grid>
     </Grid>

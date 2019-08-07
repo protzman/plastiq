@@ -10,6 +10,7 @@ class MyDocument extends Document {
       <html lang="en" dir="ltr">
         <Head>
           <meta charSet="utf-8" />
+          <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css" rel="stylesheet" />
           {/* Use minimum-scale=1 to enable GPU rasterization */}
           <meta
             name="viewport"

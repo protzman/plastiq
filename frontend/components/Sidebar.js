@@ -39,7 +39,7 @@ const styles = theme => ({
     width: drawerWidth,
   },
   appBar: {
-    marginLeft: drawerWidth,
+    paddingLeft: 'calc(15% + 16px)',
     background: 'none',
     alignItems: 'center'
   },
@@ -129,7 +129,7 @@ class Sidebar extends Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
+        {/* <AppBar position="fixed" className={classes.appBar}>
           <Toolbar>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -144,7 +144,7 @@ class Sidebar extends Component {
               />
             </div>
           </Toolbar>
-        </AppBar>
+        </AppBar> */}
         <Drawer
           className={classes.drawer}
           variant="permanent"

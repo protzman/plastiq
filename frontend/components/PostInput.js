@@ -23,7 +23,7 @@ export default class RichEditorExample extends React.Component {
     this.focus = () => this.refs.editor.focus()
     this.onChange = (editorState) => {
       this.setState({ editorState }, () => {
-        this.props.setContent(editorState.getCurrentContent())
+        this.props.setContent(editorState.getCurrentContent().getBlockMap())
       })
     }
     this.handleKeyCommand = this._handleKeyCommand.bind(this)
