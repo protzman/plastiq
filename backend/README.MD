@@ -31,7 +31,9 @@ _to the_ `schema.grapql`
 ## Running locally - post clone
 1. `npm i`
 2. `npm run start`
+
 _If variables.env is not located in the cloned packag but you have the rest of the code, set up the `variables.env` like so_
+
 ```json
 FRONTEND_URL="http://localhost:7777"
 PRISMA_ENDPOINT="https://{prisma-demo-server}.prisma.sh/{username}/{project-name}/dev"
